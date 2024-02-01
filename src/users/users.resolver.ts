@@ -21,7 +21,7 @@ export class UsersResolver {
     @Args('input') createAccountInput: CreateAccountInput,
   ): Promise<CreateAccountOutput> {
     try {
-      return this.usersService.creasteAccount(createAccountInput);
+      return this.usersService.createAccount(createAccountInput);
     } catch (error) {
       return {
         ok: false,

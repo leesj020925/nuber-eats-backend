@@ -11,7 +11,7 @@ export class UsersService {
     @InjectRepository(User) private readonly users: Repository<User>,
   ) {}
 
-  async creasteAccount({
+  async createAccount({
     email,
     password,
     role,
