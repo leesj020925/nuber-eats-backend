@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateAccountInput } from './dtos/create-account.dto';
 import { LoginInput } from './dtos/login.dto';
 import { JwtService } from 'src/jwt/jwt.service';
+import { EditProfileInput, EditProfileOutput } from './dtos/edit-profile.dto';
 
 @Injectable()
 export class UserService {
@@ -68,5 +69,22 @@ export class UserService {
 
   async findById(id: number): Promise<User> {
     return this.users.findOne({ where: { id } });
+  }
+
+  async editProfile(
+    userId: number,
+    { email, password }: EditProfileInput,
+  ): Promise<User> {
+    const user = await this.users.findOne({ where: { id: userId } });
+    // the reason of doing like this is because of the typeorm's update method.
+    // the update method doesn't check if the entity is exist and send direct to the db
+    // so the hooks - @BeforeInsert, @BeforeUpdate, etc - are not called.
+    if (email) {
+      user.email = email;
+    }
+    if (password) {
+      user.password = password;
+    }
+    return this.users.save(user);
   }
 }
