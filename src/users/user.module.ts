@@ -5,9 +5,10 @@ import { UserService } from './user.service';
 import { UserResolver } from './user.resolver';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from 'src/jwt/jwt.service';
+import { Verification } from './entities/verification.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User, Verification])],
   providers: [UserResolver, UserService],
   exports: [UserService],
 })
