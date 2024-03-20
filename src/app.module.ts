@@ -30,7 +30,7 @@ import { MailModule } from './mail/mail.module';
       ignoreEnvFile: process.env.NODE_ENV === 'prod',
       // check each value.
       validationSchema: Joi.object({
-        NODE_ENV: Joi.string().valid('dev', 'prod').required(), // check NODE_ENV is the value in 'dev' and 'prod'.
+        NODE_ENV: Joi.string().valid('dev', 'prod', 'test').required(), // check NODE_ENV is the value in 'dev' and 'prod'.
         DB_HOST: Joi.string().required(), // check DB_HOST is exist. values below are following the same process.
         DB_PORT: Joi.string().required(),
         DB_USERNAME: Joi.string().required(),
@@ -51,7 +51,8 @@ import { MailModule } from './mail/mail.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod', //read the explanation
-      logging: process.env.NODE_ENV !== 'prod',
+      logging:
+        process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
       entities: [User, Verification],
     }),
     //import the GraphQL Module.
